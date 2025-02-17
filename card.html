@@ -26,6 +26,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      position: relative;
     }
     /* Card Container */
     .card-container {
@@ -40,24 +41,7 @@
       padding: 1.5rem;
       margin: 1rem;
     }
-    /* Top Icon: Share */
-    .top-icons {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 10;
-    }
-    .top-share-icon {
-      font-size: 1.8rem;
-      color: var(--secondary-color);
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-    .top-share-icon:hover {
-      color: var(--accent-color);
-    }
-    /* Style Controls (top-left) */
+    /* Top Left Style Button (Settings Icon) */
     #styleControlsContainer {
       position: absolute;
       top: 10px;
@@ -65,14 +49,15 @@
       z-index: 10;
     }
     #styleButton {
-      padding: 0.2rem 0.3rem;
-      font-size: 0.65rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: #fff;
+      padding: 0.5rem;
+      font-size: 1.2rem;
+      border: none;
+      background: none;
       cursor: pointer;
     }
-    #styleButton i { margin-left: 0.2rem; }
+    #styleButton:hover {
+      color: var(--secondary-color);
+    }
     /* Style Dropdown */
     #styleDropdown {
       display: none;
@@ -82,45 +67,42 @@
       background: #fff;
       border: 1px solid #ccc;
       border-radius: 4px;
-      width: 180px;
+      width: auto; /* Adjust to content */
       z-index: 10;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
     }
-    .dropdown-section-label {
-      padding: 0.2rem;
-      background: #f0f0f0;
-      font-weight: bold;
-      border-bottom: 1px solid #ccc;
-    }
-    .dropdown-options {
+    #styleDropdown ul {
       list-style: none;
       margin: 0;
-      padding: 0;
+      padding: 0.5rem;
     }
-    .dropdown-options li {
-      padding: 0.2rem;
+    #styleDropdown li {
+      padding: 0.3rem 0.5rem;
       cursor: pointer;
     }
-    .dropdown-options li:hover {
+    #styleDropdown li:hover {
       background: var(--secondary-color);
       color: #fff;
     }
-    #applyStyleButton {
-      width: 100%;
-      padding: 0.25rem;
-      font-size: 0.65rem;
-      border: none;
+    /* Buttons in Dropdown */
+    .dropdown-btns {
+      display: flex;
+      justify-content: space-between;
       border-top: 1px solid #ccc;
+    }
+    .dropdown-btns button {
+      flex: 1;
+      padding: 0.3rem;
+      border: none;
       background: var(--accent-color);
       color: #fff;
       cursor: pointer;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
+      font-size: 0.75rem;
     }
-    #applyStyleButton:hover {
+    .dropdown-btns button:hover {
       background: #d43f1f;
     }
-    /* Mini Icons */
+    /* Mini Icons (Call, Email, WhatsApp, Map) */
     .mini-icons {
       display: flex;
       justify-content: center;
@@ -275,45 +257,54 @@
         white-space: normal;
       }
     }
+    /* Floating Buttons for Feedback and Questions */
+    .floating-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--secondary-color);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+    }
+    .floating-btn:hover {
+      background: var(--accent-color);
+    }
+    /* Position second floating button above the first */
+    .floating-btn.feedback {
+      bottom: 80px;
+    }
   </style>
 </head>
 <body>
-  <!-- Top Icon: Share -->
-  <div class="top-icons">
-    <button class="top-share-icon" id="topShareIcon" title="Share">
-      <i class="fas fa-share-alt"></i>
-    </button>
-  </div>
-
-  <!-- Style Controls (top-left) -->
+  <!-- Top Left Style Controls (Settings Icon) -->
   <div id="styleControlsContainer">
-    <button id="styleButton" class="dropdown-btn">
-      Style <i class="fas fa-caret-down"></i>
+    <button id="styleButton" title="Settings">
+      <i class="fas fa-cog"></i>
     </button>
     <div id="styleDropdown">
-      <!-- Theme Section -->
-      <div class="dropdown-section">
-        <div class="dropdown-section-label">Theme</div>
-        <ul class="dropdown-options">
-          <li data-theme="default">Default</li>
-          <li data-theme="blue">Blue</li>
-          <li data-theme="red">Red</li>
-          <li data-theme="green">Green</li>
-        </ul>
+      <ul>
+        <li data-theme="default">Default Theme</li>
+        <li data-theme="blue">Blue Theme</li>
+        <li data-theme="red">Red Theme</li>
+        <li data-theme="green">Green Theme</li>
+        <li data-mood="day">Day Mood</li>
+        <li data-mood="night">Night Mood</li>
+      </ul>
+      <div class="dropdown-btns">
+        <button id="previewThemeBtn">Preview</button>
+        <button id="applyStyleButton">Apply</button>
       </div>
-      <!-- Mood Section -->
-      <div class="dropdown-mood-section">
-        <div class="dropdown-section-label">Mood</div>
-        <ul class="dropdown-options">
-          <li data-mood="day">Day</li>
-          <li data-mood="night">Night</li>
-        </ul>
-      </div>
-      <!-- Apply Button -->
-      <button id="applyStyleButton">Apply</button>
     </div>
   </div>
 
+  <!-- Card Container -->
   <div class="card-container" id="cardContainer">
     <!-- Mini Icons -->
     <div class="mini-icons">
@@ -375,6 +366,21 @@
     </div>
   </div>
 
+  <!-- Top Right Share Button -->
+  <div class="top-icons" style="top:10px; right:10px;">
+    <button class="top-share-icon" id="topShareIcon" title="Share">
+      <i class="fas fa-share-alt"></i>
+    </button>
+  </div>
+
+  <!-- Floating Buttons for Feedback and Questions -->
+  <button class="floating-btn feedback" title="Feedback" onclick="alert('Feedback form coming soon!')">
+    <i class="fas fa-comment"></i>
+  </button>
+  <button class="floating-btn" title="Ask a Question" onclick="alert('Contact us for any questions!')">
+    <i class="fas fa-question"></i>
+  </button>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       let selectedTheme = "default";
@@ -383,7 +389,7 @@
       
       console.log("Current URL:", window.location.href);
 
-      // 1) Populate Profile Image and Info
+      // Populate Profile Info
       const profileImage = params.get('profileImage') || "";
       document.getElementById('cardProfileImage').src = profileImage;
       document.getElementById('cardName').textContent = params.get('name') || "";
@@ -392,18 +398,14 @@
       document.getElementById('cardPhone').textContent = params.get('phone') || "";
       document.getElementById('cardEmail').textContent = params.get('email') || "";
       
-      // 2) Business Info Section
+      // Business Info Section
       const businessInfo = params.get('businessInfo') || "";
       const paragraphs = businessInfo.split('\n').filter(p => p.trim() !== '');
       const businessInfoContainer = document.getElementById('businessInfoContent');
-      businessInfoContainer.innerHTML = paragraphs
-        .map(p => `<div class="business-info-content"><p>${p}</p></div>`)
-        .join('');
+      businessInfoContainer.innerHTML = paragraphs.map(p => `<div class="business-info-content"><p>${p}</p></div>`).join('');
       const paragraphDivs = businessInfoContainer.querySelectorAll('.business-info-content');
       let currentIndex = 0;
-      paragraphDivs.forEach((div, idx) => {
-        div.style.display = idx === 0 ? 'block' : 'none';
-      });
+      paragraphDivs.forEach((div, idx) => { div.style.display = idx === 0 ? 'block' : 'none'; });
       if (paragraphDivs.length > 0) {
         setInterval(() => {
           paragraphDivs[currentIndex].style.display = 'none';
@@ -412,7 +414,7 @@
         }, 8000);
       }
       
-      // 3) Social Links
+      // Social Links
       const socialLinks = {
         facebook: document.getElementById('facebookButton'),
         instagram: document.getElementById('instagramButton'),
@@ -429,47 +431,29 @@
         }
       });
       
-      // 4) Mini Icons Functionality
+      // Mini Icons Functionality
       const phoneParam = params.get('phone') || "";
       const emailParam = params.get('email') || "";
       const addressParam = params.get('address') || "";
-      document.getElementById('miniCallButton').onclick = () => {
-        if (phoneParam) {
-          window.location.href = `tel:${phoneParam}`;
-        }
-      };
-      document.getElementById('miniEmailButton').onclick = () => {
-        if (emailParam) {
-          window.location.href = `mailto:${emailParam}`;
-        }
-      };
-      document.getElementById('miniWhatsappButton').onclick = () => {
-        if (phoneParam) {
-          window.location.href = `https://wa.me/${phoneParam}`;
-        }
-      };
-      document.getElementById('miniMapButton').onclick = () => {
+      document.getElementById('miniCallButton').onclick = () => { if (phoneParam) window.location.href = `tel:${phoneParam}`; };
+      document.getElementById('miniEmailButton').onclick = () => { if (emailParam) window.location.href = `mailto:${emailParam}`; };
+      document.getElementById('miniWhatsappButton').onclick = () => { if (phoneParam) window.location.href = `https://wa.me/${phoneParam}`; };
+      document.getElementById('miniMapButton').onclick = () => { 
         if (addressParam) {
           const encodedAddr = encodeURIComponent(addressParam);
           window.open(`https://www.google.com/maps?q=${encodedAddr}`, '_blank');
         }
       };
 
-      // 5) Connect Button (vCard)
+      // Connect Button (vCard)
       document.getElementById('connectButton').onclick = () => {
         const name = params.get('name') || "Contact";
-        const phone = phoneParam;
-        const email = emailParam;
-        const address = addressParam;
         const vCardContent =
-          "BEGIN:VCARD\r\n" +
-          "VERSION:3.0\r\n" +
-          `N:;${name};;;\r\n` +
-          `FN:${name}\r\n` +
-          `TEL;TYPE=CELL:${phone}\r\n` +
-          `EMAIL;TYPE=INTERNET:${email}\r\n` +
-          `ADR;TYPE=WORK:;;${address};;;;\r\n` +
-          "END:VCARD\r\n";
+          "BEGIN:VCARD\r\nVERSION:3.0\r\n" +
+          `N:;${name};;;\r\nFN:${name}\r\n` +
+          `TEL;TYPE=CELL:${phoneParam}\r\n` +
+          `EMAIL;TYPE=INTERNET:${emailParam}\r\n` +
+          `ADR;TYPE=WORK:;;${addressParam};;;;\r\nEND:VCARD\r\n`;
         const blob = new Blob([vCardContent], { type: 'text/vcard' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -479,7 +463,7 @@
         URL.revokeObjectURL(url);
       };
 
-      // 6) Action Buttons – Set HREF
+      // Action Buttons
       const callButton = document.getElementById('callButton');
       const whatsappButton = document.getElementById('whatsappButton');
       const emailButton = document.getElementById('emailButton');
@@ -497,12 +481,10 @@
       }
       callButton.addEventListener('click', function(e) {
         e.preventDefault();
-        setTimeout(() => {
-          window.location.href = callButton.href;
-        }, 100);
+        setTimeout(() => { window.location.href = callButton.href; }, 100);
       });
 
-      // 7) Share Icon (Web Share API)
+      // Share Icon (Web Share API)
       document.getElementById('topShareIcon').onclick = async () => {
         try {
           if (navigator.share) {
@@ -519,38 +501,31 @@
         }
       };
 
-      // 8) Style Dropdown Logic – Theme and Mood
+      // Style Dropdown Logic
       const styleButton = document.getElementById('styleButton');
       const styleDropdown = document.getElementById('styleDropdown');
       styleButton.addEventListener('click', (e) => {
         e.stopPropagation();
-        styleDropdown.style.display = styleDropdown.style.display === 'block' ? 'none' : 'block';
+        styleDropdown.style.display = (styleDropdown.style.display === 'block') ? 'none' : 'block';
       });
       document.addEventListener('click', (e) => {
         if (!document.getElementById('styleControlsContainer').contains(e.target)) {
           styleDropdown.style.display = 'none';
         }
       });
-      // Theme selection
-      const themeOpts = styleDropdown.querySelectorAll('[data-theme]');
-      themeOpts.forEach(opt => {
+      // Dropdown Option Selection
+      const options = styleDropdown.querySelectorAll('li');
+      options.forEach(opt => {
         opt.addEventListener('click', () => {
-          selectedTheme = opt.getAttribute('data-theme');
-          themeOpts.forEach(o => o.style.background = '');
+          if (opt.hasAttribute('data-theme')) { selectedTheme = opt.getAttribute('data-theme'); }
+          if (opt.hasAttribute('data-mood')) { selectedMood = opt.getAttribute('data-mood'); }
+          // Mark selection visually (simple background change)
+          options.forEach(o => o.style.background = '');
           opt.style.background = "#ddd";
         });
       });
-      // Mood selection
-      const moodOpts = styleDropdown.querySelectorAll('[data-mood]');
-      moodOpts.forEach(opt => {
-        opt.addEventListener('click', () => {
-          selectedMood = opt.getAttribute('data-mood');
-          moodOpts.forEach(o => o.style.background = '');
-          opt.style.background = "#ddd";
-        });
-      });
-      // Apply Theme & Mood
-      function applyTheme() {
+      // Preview and Apply Buttons
+      function updateTheme() {
         const card = document.querySelector('.card-container');
         if (selectedTheme === 'default') {
           document.documentElement.style.setProperty('--secondary-color', '#009688');
@@ -581,7 +556,6 @@
           card.style.borderImage = `linear-gradient(45deg, #4CAF50, #8BC34A, #388E3C) 1`;
           card.style.boxShadow = "0 8px 30px rgba(76,175,80,0.4)";
         }
-        // Apply Mood adjustments
         if (selectedMood === 'night') {
           document.documentElement.style.setProperty('--card-background', '#2b2b2b');
           document.documentElement.style.setProperty('--body-bg', 'linear-gradient(135deg, #1a1a1a, #333333)');
@@ -595,21 +569,17 @@
           document.documentElement.style.setProperty('--neutral-dark', '#333333');
           document.documentElement.style.setProperty('--business-info-bg', '#e0f7fa');
         }
+      }
+      document.getElementById('previewThemeBtn').addEventListener('click', function() {
+        updateTheme(); // Preview: update theme but do not update URL
+      });
+      document.getElementById('applyStyleButton').addEventListener('click', function() {
+        updateTheme();
         const newUrl = new URL(window.location.href);
         newUrl.searchParams.set('theme', selectedTheme);
         newUrl.searchParams.set('mood', selectedMood);
         history.replaceState(null, "", newUrl.toString());
         styleDropdown.style.display = 'none';
-      }
-      document.getElementById('applyStyleButton').addEventListener('click', applyTheme);
-      window.addEventListener('DOMContentLoaded', () => {
-        const lockedTheme = params.get('theme');
-        const lockedMood = params.get('mood');
-        if (lockedTheme) selectedTheme = lockedTheme;
-        if (lockedMood) selectedMood = lockedMood;
-        if (lockedTheme || lockedMood) {
-          applyTheme();
-        }
       });
     });
   </script>
