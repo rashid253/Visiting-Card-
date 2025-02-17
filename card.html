@@ -31,17 +31,17 @@
     /* Card Container */
     .card-container {
       position: relative;
-      width: 100%;
+      width: 400px;
       max-width: 400px;
       background: var(--card-background);
-      border-radius: 20px;
+      border-radius: 15px; /* slightly rounded corners */
       border: 2px solid transparent;
       border-image: linear-gradient(45deg, var(--secondary-color), var(--accent-color), #3f51b5) 1;
       box-shadow: 0 8px 30px rgba(0,0,0,0.2);
       padding: 1.5rem;
       margin: 1rem;
     }
-    /* Top Left Style Button (Settings Icon) */
+    /* Top Left Settings Icon inside card */
     #styleControlsContainer {
       position: absolute;
       top: 10px;
@@ -54,6 +54,7 @@
       border: none;
       background: none;
       cursor: pointer;
+      color: blue; /* solid blue color */
     }
     #styleButton:hover {
       color: var(--secondary-color);
@@ -67,7 +68,7 @@
       background: #fff;
       border: 1px solid #ccc;
       border-radius: 4px;
-      width: auto; /* Adjust to content */
+      width: auto;
       z-index: 10;
       font-size: 0.75rem;
     }
@@ -235,9 +236,98 @@
     .social-icon:hover {
       color: var(--secondary-color);
     }
+    /* Floating Buttons for Feedback and Chat */
+    .floating-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--secondary-color);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+    }
+    .floating-btn:hover {
+      background: var(--accent-color);
+    }
+    /* Position feedback button above the chat button */
+    .floating-btn.feedback {
+      bottom: 80px;
+    }
+    /* Top Right Share Icon */
+    .top-icons {
+      position: absolute;
+      top: 10px;
+      right: -30px;
+      z-index: 10;
+    }
+    .top-share-icon {
+      padding: 0.5rem;
+      font-size: 1.2rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: blue;
+    }
+    .top-share-icon:hover {
+      color: var(--secondary-color);
+    }
+    /* Modal for Chat Query */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+    }
+    .modal-content h3 {
+      margin-top: 0;
+    }
+    .modal textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 10px;
+      resize: none;
+      padding: 10px;
+      font-size: 1rem;
+    }
+    .modal button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .modal .send-btn {
+      background-color: var(--secondary-color);
+      color: #fff;
+    }
+    .modal .cancel-btn {
+      background-color: #ccc;
+      color: #333;
+    }
+    /* Responsive: Card takes full mobile width */
     @media (max-width: 480px) {
       .card-container {
-        max-width: 90%;
+        width: 100%;
+        max-width: 100%;
         padding: 1rem;
       }
       .profile-section {
@@ -257,55 +347,32 @@
         white-space: normal;
       }
     }
-    /* Floating Buttons for Feedback and Questions */
-    .floating-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--secondary-color);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      font-size: 1.5rem;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      margin-bottom: 10px;
-    }
-    .floating-btn:hover {
-      background: var(--accent-color);
-    }
-    /* Position second floating button above the first */
-    .floating-btn.feedback {
-      bottom: 80px;
-    }
   </style>
 </head>
 <body>
-  <!-- Top Left Style Controls (Settings Icon) -->
-  <div id="styleControlsContainer">
-    <button id="styleButton" title="Settings">
-      <i class="fas fa-cog"></i>
-    </button>
-    <div id="styleDropdown">
-      <ul>
-        <li data-theme="default">Default Theme</li>
-        <li data-theme="blue">Blue Theme</li>
-        <li data-theme="red">Red Theme</li>
-        <li data-theme="green">Green Theme</li>
-        <li data-mood="day">Day Mood</li>
-        <li data-mood="night">Night Mood</li>
-      </ul>
-      <div class="dropdown-btns">
-        <button id="previewThemeBtn">Preview</button>
-        <button id="applyStyleButton">Apply</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Card Container -->
   <div class="card-container" id="cardContainer">
+    <!-- Top Left Settings Icon inside card -->
+    <div id="styleControlsContainer">
+      <button id="styleButton" title="Settings">
+        <i class="fas fa-cog"></i>
+      </button>
+      <div id="styleDropdown">
+        <ul>
+          <li data-theme="default">Default Theme</li>
+          <li data-theme="blue">Blue Theme</li>
+          <li data-theme="red">Red Theme</li>
+          <li data-theme="green">Green Theme</li>
+          <li data-mood="day">Day Mood</li>
+          <li data-mood="night">Night Mood</li>
+        </ul>
+        <div class="dropdown-btns">
+          <button id="previewThemeBtn">Preview</button>
+          <button id="applyStyleButton">Apply</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Mini Icons -->
     <div class="mini-icons">
       <a id="miniCallButton" class="icon" title="Call">
@@ -366,20 +433,32 @@
     </div>
   </div>
 
-  <!-- Top Right Share Button -->
-  <div class="top-icons" style="top:10px; right:10px;">
+  <!-- Top Right Share Button (outside card container) -->
+  <div class="top-icons">
     <button class="top-share-icon" id="topShareIcon" title="Share">
       <i class="fas fa-share-alt"></i>
     </button>
   </div>
 
-  <!-- Floating Buttons for Feedback and Questions -->
-  <button class="floating-btn feedback" title="Feedback" onclick="alert('Feedback form coming soon!')">
-    <i class="fas fa-comment"></i>
+  <!-- Floating Buttons for Feedback and Chat -->
+  <button class="floating-btn feedback" title="Feedback" onclick="window.location.href='mailto:rashidncit@gmail.com?subject=Feedback on Business Card'">
+    <i class="fas fa-comment-dots"></i>
   </button>
-  <button class="floating-btn" title="Ask a Question" onclick="alert('Contact us for any questions!')">
-    <i class="fas fa-question"></i>
+  <button class="floating-btn" id="floatingChatBtn" title="Chat with us">
+    <i class="fas fa-comments"></i>
   </button>
+
+  <!-- Modal Popup for Chat Query -->
+  <div id="chatModal" class="modal">
+    <div class="modal-content">
+      <h3>Send your query</h3>
+      <textarea id="chatQuery" placeholder="Type your query here..."></textarea>
+      <div>
+        <button class="send-btn" id="sendChat">Send</button>
+        <button class="cancel-btn" id="cancelChat">Cancel</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -519,7 +598,6 @@
         opt.addEventListener('click', () => {
           if (opt.hasAttribute('data-theme')) { selectedTheme = opt.getAttribute('data-theme'); }
           if (opt.hasAttribute('data-mood')) { selectedMood = opt.getAttribute('data-mood'); }
-          // Mark selection visually (simple background change)
           options.forEach(o => o.style.background = '');
           opt.style.background = "#ddd";
         });
@@ -571,7 +649,7 @@
         }
       }
       document.getElementById('previewThemeBtn').addEventListener('click', function() {
-        updateTheme(); // Preview: update theme but do not update URL
+        updateTheme();
       });
       document.getElementById('applyStyleButton').addEventListener('click', function() {
         updateTheme();
@@ -580,6 +658,48 @@
         newUrl.searchParams.set('mood', selectedMood);
         history.replaceState(null, "", newUrl.toString());
         styleDropdown.style.display = 'none';
+      });
+      
+      // Chat Modal Logic
+      const chatModal = document.getElementById('chatModal');
+      const floatingChatBtn = document.getElementById('floatingChatBtn');
+      const sendChat = document.getElementById('sendChat');
+      const cancelChat = document.getElementById('cancelChat');
+      const chatQuery = document.getElementById('chatQuery');
+      
+      floatingChatBtn.addEventListener('click', () => {
+        chatModal.style.display = 'block';
+        chatQuery.value = "";
+        chatQuery.focus();
+      });
+      
+      cancelChat.addEventListener('click', () => {
+        chatModal.style.display = 'none';
+      });
+      
+      sendChat.addEventListener('click', () => {
+        const queryText = chatQuery.value.trim();
+        if (!queryText) {
+          alert("Please enter your query.");
+          return;
+        }
+        // Build the message to be sent via WhatsApp
+        const finalMsg = `Query: ${queryText}\n\nThank you for contacting us. Our representative will contact you within 24 hours.`;
+        if (phoneParam) {
+          // Open WhatsApp chat with pre-filled text
+          window.open(`https://wa.me/${phoneParam}?text=${encodeURIComponent(finalMsg)}`, '_blank');
+        } else {
+          alert("WhatsApp number not provided.");
+        }
+        alert("Thank you for contacting us. Our representative will contact you within 24 hours.");
+        chatModal.style.display = 'none';
+      });
+      
+      // Close modal if clicked outside the content
+      window.addEventListener('click', (e) => {
+        if (e.target === chatModal) {
+          chatModal.style.display = 'none';
+        }
       });
     });
   </script>
