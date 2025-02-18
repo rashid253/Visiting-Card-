@@ -64,9 +64,11 @@
         background: none;
         cursor: pointer;
         color: blue;
+        transition: transform 0.3s ease;
       }
       #styleButton:hover {
         color: var(--secondary-color);
+        transform: scale(1.1);
       }
       /* Top Right Share Icon */
       .top-icons {
@@ -82,9 +84,11 @@
         background: none;
         cursor: pointer;
         color: blue;
+        transition: transform 0.3s ease;
       }
       .top-share-icon:hover {
         color: var(--secondary-color);
+        transform: scale(1.1);
       }
       /* Settings Dropdown Panel */
       #styleDropdown {
@@ -97,7 +101,7 @@
         border-radius: 4px;
         z-index: 10;
         font-size: 0.75rem;
-        width: 150px; /* Reduced width */
+        width: 130px; /* Suitable width so card preview remains visible */
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
       }
       /* Each Settings Group */
@@ -107,15 +111,25 @@
       .setting-group:last-child {
         border-bottom: none;
       }
-      /* The header always visible */
+      /* 3D Effect for Group Headers */
       .setting-header {
-        background: var(--dropdown-header-bg);
+        background: linear-gradient(to bottom, #f8f8f8, #dcdcdc);
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         color: var(--dropdown-header-color);
         padding: 5px 8px;
         cursor: pointer;
         font-size: 0.8rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        margin: 3px 0;
       }
-      /* The content is hidden initially */
+      .setting-header:hover {
+        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4);
+        transform: translateY(-1px);
+      }
+      /* The content inside each group */
       .setting-content {
         display: none;
         padding: 5px;
@@ -128,6 +142,7 @@
       .setting-options li {
         padding: 0.3rem 0.5rem;
         cursor: pointer;
+        transition: background 0.3s;
       }
       .setting-options li:hover {
         background: var(--secondary-color);
@@ -147,9 +162,11 @@
         color: #fff;
         cursor: pointer;
         font-size: 0.75rem;
+        transition: box-shadow 0.3s ease;
       }
       .dropdown-btns button:hover {
         background: var(--dropdown-btn-hover);
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
       }
       /* Mini Icons (Call, Email, WhatsApp, Map) */
       .mini-icons {
@@ -166,9 +183,12 @@
         border-radius: 50%;
         padding: 0.5rem;
         background: rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
       }
       .mini-icons .icon:hover {
         color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
       }
       /* Profile Section */
       .profile-section {
@@ -190,6 +210,10 @@
         border-radius: 50%;
         border: 2px solid var(--neutral-light);
         object-fit: cover;
+        transition: box-shadow 0.3s ease;
+      }
+      .profile-image:hover {
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
       }
       .profile-name {
         color: var(--primary-color);
@@ -216,8 +240,10 @@
         font-size: 1.2rem;
         color: var(--secondary-color);
         cursor: pointer;
+        transition: transform 0.3s;
       }
       .connect-btn:hover {
+        transform: scale(1.1);
         color: var(--accent-color);
       }
       /* Business Info Section */
@@ -261,6 +287,11 @@
         border-radius: 10px;
         cursor: pointer;
         color: #fff;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
       }
       .action-btn:active {
         filter: brightness(90%);
@@ -280,9 +311,12 @@
         text-decoration: none;
         padding: 0.5rem;
         background: rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
       }
       .social-icon:hover {
         color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
       }
       /* Floating Feedback Button (fixed) */
       .floating-btn {
@@ -299,14 +333,16 @@
         font-size: 1.5rem;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         margin-bottom: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
       }
       .floating-btn:hover {
         background: var(--accent-color);
+        transform: scale(1.1);
       }
       /* Floating Live Chat Icon (outside card on right) */
       #floatingChatBtn {
         position: absolute;
-        top: 10px;
+        top: 20px; /* slightly overlapping with card border */
         right: -60px;
         background: var(--secondary-color);
         color: #fff;
@@ -317,9 +353,11 @@
         cursor: pointer;
         font-size: 1.5rem;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s, box-shadow 0.3s;
       }
       #floatingChatBtn:hover {
         background: var(--accent-color);
+        transform: scale(1.1);
       }
       /* Live Chat Modal (centered) */
       .modal {
@@ -570,7 +608,7 @@
         let selectedIconStyle = "none";
         const params = new URLSearchParams(window.location.search);
         console.log("Current URL:", window.location.href);
-
+        
         /* -------------------- Populate Card Info -------------------- */
         const profileImage = params.get("profileImage") || "";
         document.getElementById("cardProfileImage").src = profileImage;
@@ -579,7 +617,7 @@
         document.getElementById("cardAddress").textContent = params.get("address") || "";
         document.getElementById("cardPhone").textContent = params.get("phone") || "";
         document.getElementById("cardEmail").textContent = params.get("email") || "";
-
+        
         const businessInfo = params.get("businessInfo") || "";
         const paragraphs = businessInfo.split("\n").filter((p) => p.trim() !== "");
         const businessInfoContainer = document.getElementById("businessInfoContent");
@@ -598,7 +636,7 @@
             paragraphDivs[currentIndex].style.display = "block";
           }, 8000);
         }
-
+        
         /* -------------------- Social Links -------------------- */
         const socialLinks = {
           facebook: document.getElementById("facebookButton"),
@@ -615,7 +653,7 @@
             element.style.visibility = "hidden";
           }
         });
-
+        
         /* -------------------- Mini Icons -------------------- */
         const phoneParam = params.get("phone") || "";
         const emailParam = params.get("email") || "";
@@ -635,7 +673,7 @@
             window.open(`https://www.google.com/maps?q=${encodedAddr}`, "_blank");
           }
         };
-
+        
         /* -------------------- Connect (vCard) -------------------- */
         document.getElementById("connectButton").onclick = () => {
           const name = params.get("name") || "Contact";
@@ -653,7 +691,7 @@
           link.click();
           URL.revokeObjectURL(url);
         };
-
+        
         /* -------------------- Action Buttons -------------------- */
         const callButton = document.getElementById("callButton");
         const whatsappButton = document.getElementById("whatsappButton");
@@ -676,7 +714,7 @@
             window.location.href = callButton.href;
           }, 100);
         });
-
+        
         /* -------------------- Share Icon -------------------- */
         document.getElementById("topShareIcon").onclick = async () => {
           try {
@@ -693,9 +731,8 @@
             console.error("Error sharing:", err);
           }
         };
-
+        
         /* -------------------- Settings Dropdown Behavior -------------------- */
-        // Toggle the entire dropdown when clicking the cog
         const styleButton = document.getElementById("styleButton");
         const styleDropdown = document.getElementById("styleDropdown");
         styleButton.addEventListener("click", (e) => {
@@ -715,7 +752,7 @@
             content.style.display = content.style.display === "block" ? "none" : "block";
           });
         });
-
+        
         /* -------------------- Settings Option Selection -------------------- */
         // For Theme
         document.querySelectorAll("#themeGroup .setting-options li").forEach((li) => {
@@ -747,7 +784,7 @@
             li.style.background = "#ddd";
           });
         });
-
+        
         /* -------------------- Update Card Appearance -------------------- */
         function updateCardAppearance() {
           const card = document.querySelector(".card-container");
@@ -826,27 +863,28 @@
             });
           }
         }
+        function updateCardAppearanceAndSave() {
+          updateCardAppearance();
+          const newUrl = new URL(window.location.href);
+          newUrl.searchParams.set("theme", selectedTheme);
+          newUrl.searchParams.set("mood", selectedMood);
+          newUrl.searchParams.set("iconstyle", selectedIconStyle);
+          history.replaceState(null, "", newUrl.toString());
+        }
+        
         /* -------------------- Group Preview & Apply Handlers -------------------- */
-        // For each preview button, simply update the card appearance (using current selections)
         document.querySelectorAll(".preview-btn").forEach((btn) => {
           btn.addEventListener("click", () => {
             updateCardAppearance();
           });
         });
-        // For each apply button, update the card appearance and save all settings in URL
         document.querySelectorAll(".apply-btn").forEach((btn) => {
           btn.addEventListener("click", () => {
-            updateCardAppearance();
-            const newUrl = new URL(window.location.href);
-            newUrl.searchParams.set("theme", selectedTheme);
-            newUrl.searchParams.set("mood", selectedMood);
-            newUrl.searchParams.set("iconstyle", selectedIconStyle);
-            history.replaceState(null, "", newUrl.toString());
-            // Optionally collapse this group after applying
+            updateCardAppearanceAndSave();
             btn.closest(".setting-content").style.display = "none";
           });
         });
-
+        
         /* -------------------- Live Chat Modal -------------------- */
         const chatModal = document.getElementById("chatModal");
         const floatingChatBtn = document.getElementById("floatingChatBtn");
@@ -854,18 +892,18 @@
         const cancelChat = document.getElementById("cancelChat");
         const chatQuery = document.getElementById("chatQuery");
         const chatConversation = document.getElementById("chatConversation");
-
+        
         floatingChatBtn.addEventListener("click", () => {
           chatModal.style.display = "block";
           chatConversation.innerHTML = "";
           chatQuery.value = "";
           chatQuery.focus();
         });
-
+        
         cancelChat.addEventListener("click", () => {
           chatModal.style.display = "none";
         });
-
+        
         sendChat.addEventListener("click", () => {
           const queryText = chatQuery.value.trim();
           if (!queryText) {
@@ -886,7 +924,7 @@
           }, 1000);
           chatQuery.value = "";
         });
-
+        
         window.addEventListener("click", (e) => {
           if (e.target === chatModal) {
             chatModal.style.display = "none";
