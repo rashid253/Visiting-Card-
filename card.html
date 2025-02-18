@@ -19,7 +19,7 @@
         --card-background: #ffffff;
         --body-bg: linear-gradient(135deg, #cfd8dc, #eceff1);
         --business-info-bg: #e0f7fa;
-        /* For dropdown header text, use dark color instead of white */
+        /* For dropdown header text, use dark color */
         --dropdown-header-color: #333;
         --dropdown-btn-bg: #00796b;
         --dropdown-btn-hover: #00695c;
@@ -35,13 +35,13 @@
         min-height: 100vh;
         position: relative;
       }
-      /* Card Container */
+      /* Card Container with rounded corners */
       .card-container {
         position: relative;
         width: 400px;
         max-width: 400px;
         background: var(--card-background);
-        border-radius: 15px;
+        border-radius: 20px;
         border: 2px solid transparent;
         border-image: linear-gradient(45deg, var(--secondary-color), var(--accent-color), #3f51b5) 1;
         box-shadow: 0 8px 30px rgba(0,0,0,0.2);
@@ -85,19 +85,18 @@
       .top-share-icon:hover {
         color: var(--secondary-color);
       }
-      /* Settings Dropdown Panel
-         – Narrow width and positioned so that part of it lies outside the card */
+      /* Settings Dropdown Panel (narrow and partly outside the card) */
       #styleDropdown {
         display: none;
         position: absolute;
         top: 110%;
-        left: -20px;  /* roughly half inside, half outside the card */
+        left: -20px; /* About half inside, half outside */
         background: #fff;
         border: 1px solid #ccc;
         border-radius: 4px;
         z-index: 10;
         font-size: 0.75rem;
-        width: 120px; /* reduced width */
+        width: 100px; /* Reduced width */
         box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       }
       /* Each Settings Group */
@@ -113,7 +112,7 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-        color: var(--dropdown-header-color); /* now dark for better contrast */
+        color: var(--dropdown-header-color);
         padding: 5px 8px;
         cursor: pointer;
         font-size: 0.8rem;
@@ -139,7 +138,7 @@
         padding: 0.3rem 0.5rem;
         cursor: pointer;
         transition: background 0.3s;
-        color: #333; /* dark text for visibility */
+        color: #333;
       }
       .setting-options li:hover {
         background: var(--secondary-color);
@@ -254,7 +253,7 @@
         background: var(--business-info-bg);
         border-bottom: 2px solid var(--secondary-color);
         font-family: "Georgia", serif;
-        border-radius: 8px;
+        border-radius: 20px;
         position: relative;
       }
       .business-info-content {
@@ -284,7 +283,6 @@
         border-radius: 10px;
         cursor: pointer;
         color: #fff;
-        /* 3D effect */
         box-shadow: 4px 4px 6px rgba(0,0,0,0.3), inset -2px -2px 4px rgba(255,255,255,0.2);
         transition: transform 0.3s, box-shadow 0.3s;
       }
@@ -295,7 +293,7 @@
       .action-btn:active {
         filter: brightness(90%);
       }
-      /* For Call, WhatsApp, Email buttons, remove transition */
+      /* Remove transition for contact buttons */
       .contact-btn {
         transition: none !important;
       }
@@ -345,8 +343,8 @@
       /* Floating Live Chat Icon (outside card on right) */
       #floatingChatBtn {
         position: absolute;
-        top: 20px; /* slightly overlapping with card border */
-        right: -60px;
+        top: 40px; /* Moved a bit lower than before */
+        right: -50px; /* Adjusted so that it overlaps the border slightly */
         background: var(--secondary-color);
         color: #fff;
         border: none;
@@ -476,6 +474,7 @@
                 <li data-theme="green">Green</li>
               </ul>
               <div class="dropdown-btns">
+                <!-- Preview button is disabled so it does nothing -->
                 <button class="preview-btn" data-group="theme">Preview</button>
                 <button class="apply-btn" data-group="theme">Apply</button>
               </div>
@@ -664,7 +663,8 @@
           if (emailParam) window.location.href = `mailto:${emailParam}`;
         };
         document.getElementById("miniWhatsappButton").onclick = () => {
-          if (phoneParam) window.location.href = `https://wa.me/${phoneParam}`;
+          if (phoneParam)
+            window.location.href = `https://wa.me/${phoneParam}?text=${encodeURIComponent("I am contacting by smart link visiting card")}`;
         };
         document.getElementById("miniMapButton").onclick = () => {
           if (addressParam) {
@@ -697,7 +697,7 @@
         const emailButton = document.getElementById("emailButton");
         if (phoneParam) {
           callButton.href = `tel:${phoneParam}`;
-          whatsappButton.href = `https://wa.me/${phoneParam}`;
+          whatsappButton.href = `https://wa.me/${phoneParam}?text=${encodeURIComponent("I am contacting by smart link visiting card")}`;
         } else {
           callButton.removeAttribute("href");
           whatsappButton.removeAttribute("href");
@@ -871,10 +871,12 @@
           history.replaceState(null, "", newUrl.toString());
         }
         
-        /* -------------------- Group Preview & Apply Handlers -------------------- */
+        /* -------------------- Group Apply Handlers -------------------- */
+        // Disable Preview buttons so they do not update automatically.
         document.querySelectorAll(".preview-btn").forEach((btn) => {
           btn.addEventListener("click", () => {
-            updateCardAppearance();
+            // Do nothing on preview
+            alert("This is only a preview. Click Apply to update the card.");
           });
         });
         document.querySelectorAll(".apply-btn").forEach((btn) => {
@@ -916,7 +918,7 @@
           chatConversation.appendChild(customerMsg);
           const autoReply = document.createElement("div");
           autoReply.className = "chat-message auto-reply";
-          autoReply.textContent = "Thank you for contacting us. Our representative will contact you shortly.";
+          autoReply.textContent = "Thank you for contacting us via Smart Link Visiting Card.";
           setTimeout(() => {
             chatConversation.appendChild(autoReply);
             chatConversation.scrollTop = chatConversation.scrollHeight;
