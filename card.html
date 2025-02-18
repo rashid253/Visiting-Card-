@@ -43,6 +43,8 @@
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
         padding: 1.5rem;
         margin: 1rem;
+        /* Default transition for smoothness */
+        transition: background-color 0.5s ease, box-shadow 0.5s ease;
       }
       /* Top Left Settings Icon inside card */
       #styleControlsContainer {
@@ -80,7 +82,7 @@
       .top-share-icon:hover {
         color: var(--secondary-color);
       }
-      /* New Settings Dropdown */
+      /* Settings Dropdown */
       #styleDropdown {
         display: none;
         position: absolute;
@@ -92,7 +94,7 @@
         z-index: 10;
         font-size: 0.75rem;
         padding: 10px;
-        width: 250px;
+        width: 180px; /* Reduced width */
       }
       /* Settings Groups */
       #styleDropdown .setting-group {
@@ -115,22 +117,21 @@
         background: var(--secondary-color);
         color: #fff;
       }
-      /* Dropdown Buttons */
+      /* Dropdown Buttons: now vertical (Preview above Apply) */
       .dropdown-btns {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 5px;
         border-top: 1px solid #ccc;
         padding-top: 5px;
       }
       .dropdown-btns button {
-        flex: 1;
         padding: 0.3rem;
         border: none;
         background: var(--accent-color);
         color: #fff;
         cursor: pointer;
         font-size: 0.75rem;
-        margin: 0 2px;
       }
       .dropdown-btns button:hover {
         background: #d43f1f;
@@ -287,11 +288,12 @@
       .floating-btn:hover {
         background: var(--accent-color);
       }
-      /* Repositioned Live Chat Icon (now at bottom-right of the card) */
+      /* Floating Live Chat Icon:
+         Now kept floating outside the card on the RHS, aligned with the share icon */
       #floatingChatBtn {
         position: absolute;
-        bottom: 10px;
-        right: 10px;
+        top: 10px;
+        right: -60px;  /* outside the card’s right border */
         background: var(--secondary-color);
         color: #fff;
         border: none;
@@ -305,7 +307,7 @@
       #floatingChatBtn:hover {
         background: var(--accent-color);
       }
-      /* Live Chat Modal (positioned near the chat icon) */
+      /* Live Chat Modal (centered on screen) */
       .modal {
         display: none;
         position: fixed;
@@ -314,16 +316,18 @@
         top: 0;
         width: 100%;
         height: 100%;
-        /* transparent overlay */
         background-color: rgba(0, 0, 0, 0.3);
       }
       .modal-content {
-        position: absolute;
+        position: fixed;
         width: 300px;
         background-color: rgba(255, 255, 255, 0.9);
         padding: 15px;
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
       .modal-content h3 {
         margin-top: 0;
@@ -425,7 +429,8 @@
             </ul>
           </div>
           <div class="setting-group" id="transitionGroup">
-            <div class="setting-label">Transition</div>
+            <!-- Renamed label from Transition to Animate -->
+            <div class="setting-label">Animate</div>
             <ul class="setting-options">
               <li data-transition="none">None</li>
               <li data-transition="fade">Fade</li>
@@ -494,17 +499,11 @@
       </div>
       <!-- Social Links Section -->
       <div class="social-links">
-        <a id="facebookButton" class="social-icon"
-          ><i class="fab fa-facebook-f"></i
-        ></a>
-        <a id="instagramButton" class="social-icon"
-          ><i class="fab fa-instagram"></i
-        ></a>
-        <a id="youtubeButton" class="social-icon"
-          ><i class="fab fa-youtube"></i
-        ></a>
+        <a id="facebookButton" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a id="instagramButton" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a id="youtubeButton" class="social-icon"><i class="fab fa-youtube"></i></a>
       </div>
-      <!-- Repositioned Live Chat Icon (now bottom-right inside the card) -->
+      <!-- Floating Live Chat Icon (outside card on the right) -->
       <button id="floatingChatBtn" title="Chat with us">
         <i class="fas fa-comments"></i>
       </button>
@@ -513,13 +512,13 @@
     <button class="floating-btn feedback" title="Feedback" onclick="window.location.href='mailto:rashidncit@gmail.com?subject=Feedback on Business Card'">
       <i class="fas fa-comment-dots"></i>
     </button>
-    <!-- Live Chat Modal (opens near the chat icon) -->
+    <!-- Live Chat Modal (centered on screen) -->
     <div id="chatModal" class="modal">
       <div class="modal-content">
         <h3>Live Chat</h3>
         <!-- Conversation area -->
         <div id="chatConversation">
-          <!-- Messages appear here -->
+          <!-- Messages will appear here -->
         </div>
         <textarea id="chatQuery" placeholder="Type your message here..."></textarea>
         <div>
@@ -534,7 +533,6 @@
         let selectedTheme = "default";
         let selectedMood = "day";
         let selectedTransition = "none";
-
         const params = new URLSearchParams(window.location.search);
         console.log("Current URL:", window.location.href);
 
@@ -542,26 +540,19 @@
         const profileImage = params.get("profileImage") || "";
         document.getElementById("cardProfileImage").src = profileImage;
         document.getElementById("cardName").textContent = params.get("name") || "";
-        document.getElementById("cardBusinessName").textContent =
-          params.get("businessName") || "";
-        document.getElementById("cardAddress").textContent =
-          params.get("address") || "";
-        document.getElementById("cardPhone").textContent =
-          params.get("phone") || "";
-        document.getElementById("cardEmail").textContent =
-          params.get("email") || "";
+        document.getElementById("cardBusinessName").textContent = params.get("businessName") || "";
+        document.getElementById("cardAddress").textContent = params.get("address") || "";
+        document.getElementById("cardPhone").textContent = params.get("phone") || "";
+        document.getElementById("cardEmail").textContent = params.get("email") || "";
 
         // Business Info Section
         const businessInfo = params.get("businessInfo") || "";
         const paragraphs = businessInfo.split("\n").filter((p) => p.trim() !== "");
-        const businessInfoContainer =
-          document.getElementById("businessInfoContent");
+        const businessInfoContainer = document.getElementById("businessInfoContent");
         businessInfoContainer.innerHTML = paragraphs
           .map((p) => `<div class="business-info-content"><p>${p}</p></div>`)
           .join("");
-        const paragraphDivs = businessInfoContainer.querySelectorAll(
-          ".business-info-content"
-        );
+        const paragraphDivs = businessInfoContainer.querySelectorAll(".business-info-content");
         let currentIndex = 0;
         paragraphDivs.forEach((div, idx) => {
           div.style.display = idx === 0 ? "block" : "none";
@@ -701,7 +692,7 @@
             opt.style.background = "#ddd";
           });
         });
-        // Transition Options
+        // Animate (Transition) Options
         const transitionOptions = document.querySelectorAll("#transitionGroup .setting-options li");
         transitionOptions.forEach((opt) => {
           opt.addEventListener("click", () => {
@@ -711,8 +702,9 @@
           });
         });
 
-        // Update theme/mood/transition
-        function updateTheme() {
+        // --- Theme/Mood/Animate Application with Transition ---
+        // First, a function that applies the new properties.
+        function applyTheme() {
           const card = document.querySelector(".card-container");
           if (selectedTheme === "default") {
             document.documentElement.style.setProperty("--secondary-color", "#009688");
@@ -756,20 +748,34 @@
             document.documentElement.style.setProperty("--neutral-dark", "#333333");
             document.documentElement.style.setProperty("--business-info-bg", "#e0f7fa");
           }
-          // Apply a transition effect if selected
+        }
+        // Wrap applyTheme with a transition effect based on the selectedAnimate option.
+        function updateThemeWithTransition() {
+          const card = document.querySelector(".card-container");
           if (selectedTransition === "fade") {
             card.style.transition = "opacity 0.5s ease-in-out";
+            card.style.opacity = 0;
+            setTimeout(() => {
+              applyTheme();
+              card.style.opacity = 1;
+            }, 100);
           } else if (selectedTransition === "slide") {
             card.style.transition = "transform 0.5s ease-in-out";
+            card.style.transform = "translateX(-50px)";
+            setTimeout(() => {
+              applyTheme();
+              card.style.transform = "translateX(0)";
+            }, 100);
           } else {
             card.style.transition = "none";
+            applyTheme();
           }
         }
         document.getElementById("previewThemeBtn").addEventListener("click", function () {
-          updateTheme();
+          updateThemeWithTransition();
         });
         document.getElementById("applyStyleButton").addEventListener("click", function () {
-          updateTheme();
+          updateThemeWithTransition();
           const newUrl = new URL(window.location.href);
           newUrl.searchParams.set("theme", selectedTheme);
           newUrl.searchParams.set("mood", selectedMood);
@@ -787,11 +793,7 @@
         const chatConversation = document.getElementById("chatConversation");
 
         floatingChatBtn.addEventListener("click", () => {
-          // Position the modal-content relative to the chat icon (to its left)
-          const rect = floatingChatBtn.getBoundingClientRect();
-          const modalContent = document.querySelector(".modal-content");
-          modalContent.style.top = rect.top - modalContent.offsetHeight - 10 + "px";
-          modalContent.style.left = rect.left - modalContent.offsetWidth - 10 + "px";
+          // Simply show the modal (modal-content is centered via CSS)
           chatModal.style.display = "block";
           // Clear previous conversation and input
           chatConversation.innerHTML = "";
@@ -809,23 +811,22 @@
             alert("Please enter your message.");
             return;
           }
-          // Simulate sending the customer's query to you
+          // Log the customer's query (here you could send it to your backend)
           console.log("Customer Query:", queryText);
-          // Append customer's message in the conversation area
+          // Append customer's message
           const customerMsg = document.createElement("div");
           customerMsg.className = "chat-message customer";
           customerMsg.textContent = queryText;
           chatConversation.appendChild(customerMsg);
-          // Auto-reply message
+          // Append auto–reply message after a short delay
           const autoReply = document.createElement("div");
           autoReply.className = "chat-message auto-reply";
-          autoReply.textContent =
-            "Thank you for contacting us. Our representative will contact you shortly.";
+          autoReply.textContent = "Thank you for contacting us. Our representative will contact you shortly.";
           setTimeout(() => {
             chatConversation.appendChild(autoReply);
             chatConversation.scrollTop = chatConversation.scrollHeight;
           }, 1000);
-          // Clear input field
+          // Clear the input field
           chatQuery.value = "";
         });
 
