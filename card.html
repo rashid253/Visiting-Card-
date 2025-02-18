@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Business Card</title>
     <!-- Font Awesome for icons -->
     <link
@@ -14,19 +14,18 @@
         --primary-color: #1e1e1e;
         --secondary-color: #1e90ff;
         --accent-color: #ff5722;
-        --neutral-light: rgba(245, 245, 245, 0.9);
+        --neutral-light: rgba(245,245,245,0.9);
         --neutral-dark: #333333;
         --card-background: #ffffff;
         --body-bg: linear-gradient(135deg, #cfd8dc, #eceff1);
         --business-info-bg: #e0f7fa;
-        /* Professional colors for dropdown headers and buttons */
-        --dropdown-header-bg: #333;
-        --dropdown-header-color: #fff;
+        /* For dropdown header text, use dark color instead of white */
+        --dropdown-header-color: #333;
         --dropdown-btn-bg: #00796b;
         --dropdown-btn-hover: #00695c;
       }
       body {
-        font-family: "Segoe UI", sans-serif;
+        font-family: 'Segoe UI', sans-serif;
         margin: 0;
         padding: 1rem;
         background: var(--body-bg);
@@ -45,12 +44,12 @@
         border-radius: 15px;
         border: 2px solid transparent;
         border-image: linear-gradient(45deg, var(--secondary-color), var(--accent-color), #3f51b5) 1;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
         padding: 1.5rem;
         margin: 1rem;
         transition: background-color 0.5s ease, box-shadow 0.5s ease;
       }
-      /* Top Left Settings Icon */
+      /* Top Left Settings Icon (remains in place) */
       #styleControlsContainer {
         position: absolute;
         top: 10px;
@@ -64,11 +63,9 @@
         background: none;
         cursor: pointer;
         color: blue;
-        transition: transform 0.3s ease;
       }
       #styleButton:hover {
         color: var(--secondary-color);
-        transform: scale(1.1);
       }
       /* Top Right Share Icon */
       .top-icons {
@@ -84,25 +81,24 @@
         background: none;
         cursor: pointer;
         color: blue;
-        transition: transform 0.3s ease;
       }
       .top-share-icon:hover {
         color: var(--secondary-color);
-        transform: scale(1.1);
       }
-      /* Settings Dropdown Panel */
+      /* Settings Dropdown Panel
+         – Narrow width and positioned so that part of it lies outside the card */
       #styleDropdown {
         display: none;
         position: absolute;
         top: 110%;
-        left: 0;
+        left: -20px;  /* roughly half inside, half outside the card */
         background: #fff;
         border: 1px solid #ccc;
         border-radius: 4px;
         z-index: 10;
         font-size: 0.75rem;
-        width: 130px; /* Suitable width so card preview remains visible */
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        width: 120px; /* reduced width */
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       }
       /* Each Settings Group */
       .setting-group {
@@ -111,25 +107,25 @@
       .setting-group:last-child {
         border-bottom: none;
       }
-      /* 3D Effect for Group Headers */
+      /* 3D Effect for Group Headers ("Theme", "Mood", "Style") */
       .setting-header {
         background: linear-gradient(to bottom, #f8f8f8, #dcdcdc);
         border: 1px solid #ccc;
         border-radius: 5px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        color: var(--dropdown-header-color);
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        color: var(--dropdown-header-color); /* now dark for better contrast */
         padding: 5px 8px;
         cursor: pointer;
         font-size: 0.8rem;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         transition: all 0.3s ease;
         margin: 3px 0;
       }
       .setting-header:hover {
-        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.4);
+        box-shadow: 3px 3px 7px rgba(0,0,0,0.4);
         transform: translateY(-1px);
       }
-      /* The content inside each group */
+      /* Content inside each group */
       .setting-content {
         display: none;
         padding: 5px;
@@ -143,6 +139,7 @@
         padding: 0.3rem 0.5rem;
         cursor: pointer;
         transition: background 0.3s;
+        color: #333; /* dark text for visibility */
       }
       .setting-options li:hover {
         background: var(--secondary-color);
@@ -166,7 +163,7 @@
       }
       .dropdown-btns button:hover {
         background: var(--dropdown-btn-hover);
-        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
       }
       /* Mini Icons (Call, Email, WhatsApp, Map) */
       .mini-icons {
@@ -182,13 +179,13 @@
         cursor: pointer;
         border-radius: 50%;
         padding: 0.5rem;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255,255,255,0.1);
         transition: transform 0.3s, box-shadow 0.3s;
       }
       .mini-icons .icon:hover {
         color: var(--secondary-color);
         transform: translateY(-2px);
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
       }
       /* Profile Section */
       .profile-section {
@@ -213,7 +210,7 @@
         transition: box-shadow 0.3s ease;
       }
       .profile-image:hover {
-        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
       }
       .profile-name {
         color: var(--primary-color);
@@ -287,6 +284,8 @@
         border-radius: 10px;
         cursor: pointer;
         color: #fff;
+        /* 3D effect */
+        box-shadow: 4px 4px 6px rgba(0,0,0,0.3), inset -2px -2px 4px rgba(255,255,255,0.2);
         transition: transform 0.3s, box-shadow 0.3s;
       }
       .action-btn:hover {
@@ -295,6 +294,10 @@
       }
       .action-btn:active {
         filter: brightness(90%);
+      }
+      /* For Call, WhatsApp, Email buttons, remove transition */
+      .contact-btn {
+        transition: none !important;
       }
       /* Social Links Section */
       .social-links {
@@ -310,7 +313,7 @@
         border-radius: 50%;
         text-decoration: none;
         padding: 0.5rem;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255,255,255,0.1);
         transition: transform 0.3s, box-shadow 0.3s;
       }
       .social-icon:hover {
@@ -331,7 +334,7 @@
         height: 50px;
         cursor: pointer;
         font-size: 1.5rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         margin-bottom: 10px;
         transition: transform 0.3s, box-shadow 0.3s;
       }
@@ -352,7 +355,7 @@
         height: 50px;
         cursor: pointer;
         font-size: 1.5rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         transition: transform 0.3s, box-shadow 0.3s;
       }
       #floatingChatBtn:hover {
@@ -368,15 +371,15 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0,0,0,0.3);
       }
       .modal-content {
         position: fixed;
         width: 300px;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255,255,255,0.9);
         padding: 15px;
         border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -553,13 +556,13 @@
       </div>
       <!-- Action Buttons Section -->
       <div class="action-buttons">
-        <a id="callButton" class="action-btn" style="background: var(--secondary-color);">
+        <a id="callButton" class="action-btn contact-btn" style="background: var(--secondary-color);">
           Call
         </a>
-        <a id="whatsappButton" class="action-btn" style="background: #25d366;">
+        <a id="whatsappButton" class="action-btn contact-btn" style="background: #25d366;">
           WhatsApp
         </a>
-        <a id="emailButton" class="action-btn" style="background: var(--accent-color);">
+        <a id="emailButton" class="action-btn contact-btn" style="background: var(--accent-color);">
           Email
         </a>
       </div>
@@ -581,11 +584,7 @@
       </button>
     </div>
     <!-- Floating Feedback Button (fixed) -->
-    <button
-      class="floating-btn feedback"
-      title="Feedback"
-      onclick="window.location.href='mailto:rashidncit@gmail.com?subject=Feedback on Business Card'"
-    >
+    <button class="floating-btn feedback" title="Feedback" onclick="window.location.href='mailto:rashidncit@gmail.com?subject=Feedback on Business Card'">
       <i class="fas fa-comment-dots"></i>
     </button>
     <!-- Live Chat Modal (centered) -->
