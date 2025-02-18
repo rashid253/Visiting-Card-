@@ -19,6 +19,11 @@
         --card-background: #ffffff;
         --body-bg: linear-gradient(135deg, #cfd8dc, #eceff1);
         --business-info-bg: #e0f7fa;
+        /* Professional colors for dropdown headers and buttons */
+        --dropdown-header-bg: #333;
+        --dropdown-header-color: #fff;
+        --dropdown-btn-bg: #00796b;
+        --dropdown-btn-hover: #00695c;
       }
       body {
         font-family: "Segoe UI", sans-serif;
@@ -45,7 +50,7 @@
         margin: 1rem;
         transition: background-color 0.5s ease, box-shadow 0.5s ease;
       }
-      /* Top Left Settings Icon inside card */
+      /* Top Left Settings Icon */
       #styleControlsContainer {
         position: absolute;
         top: 10px;
@@ -63,7 +68,7 @@
       #styleButton:hover {
         color: var(--secondary-color);
       }
-      /* Top Right Share Icon inside card */
+      /* Top Right Share Icon */
       .top-icons {
         position: absolute;
         top: 10px;
@@ -81,7 +86,7 @@
       .top-share-icon:hover {
         color: var(--secondary-color);
       }
-      /* Settings Dropdown (Patti) */
+      /* Settings Dropdown Panel */
       #styleDropdown {
         display: none;
         position: absolute;
@@ -92,48 +97,59 @@
         border-radius: 4px;
         z-index: 10;
         font-size: 0.75rem;
-        padding: 10px;
-        width: 150px; /* reduced width */
+        width: 150px; /* Reduced width */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
       }
-      /* Settings Groups */
-      #styleDropdown .setting-group {
-        margin-bottom: 10px;
+      /* Each Settings Group */
+      .setting-group {
+        border-bottom: 1px solid #ddd;
       }
-      #styleDropdown .setting-label {
-        font-weight: bold;
-        margin-bottom: 5px;
+      .setting-group:last-child {
+        border-bottom: none;
       }
-      #styleDropdown .setting-options {
+      /* The header always visible */
+      .setting-header {
+        background: var(--dropdown-header-bg);
+        color: var(--dropdown-header-color);
+        padding: 5px 8px;
+        cursor: pointer;
+        font-size: 0.8rem;
+      }
+      /* The content is hidden initially */
+      .setting-content {
+        display: none;
+        padding: 5px;
+      }
+      .setting-options {
         list-style: none;
         margin: 0;
         padding: 0;
       }
-      #styleDropdown .setting-options li {
+      .setting-options li {
         padding: 0.3rem 0.5rem;
         cursor: pointer;
       }
-      #styleDropdown .setting-options li:hover {
+      .setting-options li:hover {
         background: var(--secondary-color);
         color: #fff;
       }
-      /* Dropdown Buttons: Vertical stacking */
+      /* Buttons inside each group (stacked vertically) */
       .dropdown-btns {
         display: flex;
         flex-direction: column;
         gap: 5px;
-        border-top: 1px solid #ccc;
-        padding-top: 5px;
+        margin-top: 5px;
       }
       .dropdown-btns button {
         padding: 0.3rem;
         border: none;
-        background: var(--accent-color);
+        background: var(--dropdown-btn-bg);
         color: #fff;
         cursor: pointer;
         font-size: 0.75rem;
       }
       .dropdown-btns button:hover {
-        background: #d43f1f;
+        background: var(--dropdown-btn-hover);
       }
       /* Mini Icons (Call, Email, WhatsApp, Map) */
       .mini-icons {
@@ -287,11 +303,11 @@
       .floating-btn:hover {
         background: var(--accent-color);
       }
-      /* Floating Live Chat Icon (outside card on the right) */
+      /* Floating Live Chat Icon (outside card on right) */
       #floatingChatBtn {
         position: absolute;
         top: 10px;
-        right: -60px; /* placed outside the card’s right border */
+        right: -60px;
         background: var(--secondary-color);
         color: #fff;
         border: none;
@@ -305,7 +321,7 @@
       #floatingChatBtn:hover {
         background: var(--accent-color);
       }
-      /* Live Chat Modal (centered on screen) */
+      /* Live Chat Modal (centered) */
       .modal {
         display: none;
         position: fixed;
@@ -406,35 +422,52 @@
         <button id="styleButton" title="Settings">
           <i class="fas fa-cog"></i>
         </button>
-        <!-- Settings Dropdown -->
+        <!-- Settings Dropdown Panel -->
         <div id="styleDropdown">
+          <!-- Group: Theme -->
           <div class="setting-group" id="themeGroup">
-            <div class="setting-label">Theme</div>
-            <ul class="setting-options">
-              <li data-theme="default">Default</li>
-              <li data-theme="blue">Blue</li>
-              <li data-theme="red">Red</li>
-              <li data-theme="green">Green</li>
-            </ul>
+            <div class="setting-header">Theme</div>
+            <div class="setting-content">
+              <ul class="setting-options">
+                <li data-theme="default">Default</li>
+                <li data-theme="blue">Blue</li>
+                <li data-theme="red">Red</li>
+                <li data-theme="green">Green</li>
+              </ul>
+              <div class="dropdown-btns">
+                <button class="preview-btn" data-group="theme">Preview</button>
+                <button class="apply-btn" data-group="theme">Apply</button>
+              </div>
+            </div>
           </div>
+          <!-- Group: Mood -->
           <div class="setting-group" id="moodGroup">
-            <div class="setting-label">Mood</div>
-            <ul class="setting-options">
-              <li data-mood="day">Day</li>
-              <li data-mood="night">Night</li>
-            </ul>
+            <div class="setting-header">Mood</div>
+            <div class="setting-content">
+              <ul class="setting-options">
+                <li data-mood="day">Day</li>
+                <li data-mood="night">Night</li>
+              </ul>
+              <div class="dropdown-btns">
+                <button class="preview-btn" data-group="mood">Preview</button>
+                <button class="apply-btn" data-group="mood">Apply</button>
+              </div>
+            </div>
           </div>
+          <!-- Group: Style -->
           <div class="setting-group" id="iconStyleGroup">
-            <div class="setting-label">Style</div>
-            <ul class="setting-options">
-              <li data-iconstyle="none">None</li>
-              <li data-iconstyle="styleA">Style A</li>
-              <li data-iconstyle="styleB">Style B</li>
-            </ul>
-          </div>
-          <div class="dropdown-btns">
-            <button id="previewThemeBtn">Preview</button>
-            <button id="applyStyleButton">Apply</button>
+            <div class="setting-header">Style</div>
+            <div class="setting-content">
+              <ul class="setting-options">
+                <li data-iconstyle="none">None</li>
+                <li data-iconstyle="styleA">Style A</li>
+                <li data-iconstyle="styleB">Style B</li>
+              </ul>
+              <div class="dropdown-btns">
+                <button class="preview-btn" data-group="style">Preview</button>
+                <button class="apply-btn" data-group="style">Apply</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -510,7 +543,11 @@
       </button>
     </div>
     <!-- Floating Feedback Button (fixed) -->
-    <button class="floating-btn feedback" title="Feedback" onclick="window.location.href='mailto:rashidncit@gmail.com?subject=Feedback on Business Card'">
+    <button
+      class="floating-btn feedback"
+      title="Feedback"
+      onclick="window.location.href='mailto:rashidncit@gmail.com?subject=Feedback on Business Card'"
+    >
       <i class="fas fa-comment-dots"></i>
     </button>
     <!-- Live Chat Modal (centered) -->
@@ -534,7 +571,7 @@
         const params = new URLSearchParams(window.location.search);
         console.log("Current URL:", window.location.href);
 
-        // Populate Profile Info
+        /* -------------------- Populate Card Info -------------------- */
         const profileImage = params.get("profileImage") || "";
         document.getElementById("cardProfileImage").src = profileImage;
         document.getElementById("cardName").textContent = params.get("name") || "";
@@ -543,7 +580,6 @@
         document.getElementById("cardPhone").textContent = params.get("phone") || "";
         document.getElementById("cardEmail").textContent = params.get("email") || "";
 
-        // Business Info Section
         const businessInfo = params.get("businessInfo") || "";
         const paragraphs = businessInfo.split("\n").filter((p) => p.trim() !== "");
         const businessInfoContainer = document.getElementById("businessInfoContent");
@@ -563,7 +599,7 @@
           }, 8000);
         }
 
-        // Social Links
+        /* -------------------- Social Links -------------------- */
         const socialLinks = {
           facebook: document.getElementById("facebookButton"),
           instagram: document.getElementById("instagramButton"),
@@ -580,7 +616,7 @@
           }
         });
 
-        // Mini Icons Functionality
+        /* -------------------- Mini Icons -------------------- */
         const phoneParam = params.get("phone") || "";
         const emailParam = params.get("email") || "";
         const addressParam = params.get("address") || "";
@@ -600,7 +636,7 @@
           }
         };
 
-        // Connect Button (vCard)
+        /* -------------------- Connect (vCard) -------------------- */
         document.getElementById("connectButton").onclick = () => {
           const name = params.get("name") || "Contact";
           const vCardContent =
@@ -618,7 +654,7 @@
           URL.revokeObjectURL(url);
         };
 
-        // Action Buttons
+        /* -------------------- Action Buttons -------------------- */
         const callButton = document.getElementById("callButton");
         const whatsappButton = document.getElementById("whatsappButton");
         const emailButton = document.getElementById("emailButton");
@@ -641,7 +677,7 @@
           }, 100);
         });
 
-        // Share Icon (Web Share API)
+        /* -------------------- Share Icon -------------------- */
         document.getElementById("topShareIcon").onclick = async () => {
           try {
             if (navigator.share) {
@@ -658,7 +694,8 @@
           }
         };
 
-        // --- Settings Dropdown Logic ---
+        /* -------------------- Settings Dropdown Behavior -------------------- */
+        // Toggle the entire dropdown when clicking the cog
         const styleButton = document.getElementById("styleButton");
         const styleDropdown = document.getElementById("styleDropdown");
         styleButton.addEventListener("click", (e) => {
@@ -671,39 +708,50 @@
             styleDropdown.style.display = "none";
           }
         });
-
-        // Theme Options
-        const themeOptions = document.querySelectorAll("#themeGroup .setting-options li");
-        themeOptions.forEach((opt) => {
-          opt.addEventListener("click", () => {
-            selectedTheme = opt.getAttribute("data-theme");
-            themeOptions.forEach((o) => (o.style.background = ""));
-            opt.style.background = "#ddd";
-          });
-        });
-        // Mood Options
-        const moodOptions = document.querySelectorAll("#moodGroup .setting-options li");
-        moodOptions.forEach((opt) => {
-          opt.addEventListener("click", () => {
-            selectedMood = opt.getAttribute("data-mood");
-            moodOptions.forEach((o) => (o.style.background = ""));
-            opt.style.background = "#ddd";
-          });
-        });
-        // Icon Style Options (New Replacement for Transition)
-        const iconStyleOptions = document.querySelectorAll("#iconStyleGroup .setting-options li");
-        iconStyleOptions.forEach((opt) => {
-          opt.addEventListener("click", () => {
-            selectedIconStyle = opt.getAttribute("data-iconstyle");
-            iconStyleOptions.forEach((o) => (o.style.background = ""));
-            opt.style.background = "#ddd";
+        // Toggle each group’s content on header click
+        document.querySelectorAll(".setting-header").forEach((header) => {
+          header.addEventListener("click", () => {
+            const content = header.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
           });
         });
 
-        // --- Apply Theme, Mood & Icon Style ---
-        function applyTheme() {
+        /* -------------------- Settings Option Selection -------------------- */
+        // For Theme
+        document.querySelectorAll("#themeGroup .setting-options li").forEach((li) => {
+          li.addEventListener("click", () => {
+            selectedTheme = li.getAttribute("data-theme");
+            document.querySelectorAll("#themeGroup .setting-options li").forEach(
+              (el) => (el.style.background = "")
+            );
+            li.style.background = "#ddd";
+          });
+        });
+        // For Mood
+        document.querySelectorAll("#moodGroup .setting-options li").forEach((li) => {
+          li.addEventListener("click", () => {
+            selectedMood = li.getAttribute("data-mood");
+            document.querySelectorAll("#moodGroup .setting-options li").forEach(
+              (el) => (el.style.background = "")
+            );
+            li.style.background = "#ddd";
+          });
+        });
+        // For Icon Style (Style)
+        document.querySelectorAll("#iconStyleGroup .setting-options li").forEach((li) => {
+          li.addEventListener("click", () => {
+            selectedIconStyle = li.getAttribute("data-iconstyle");
+            document.querySelectorAll("#iconStyleGroup .setting-options li").forEach(
+              (el) => (el.style.background = "")
+            );
+            li.style.background = "#ddd";
+          });
+        });
+
+        /* -------------------- Update Card Appearance -------------------- */
+        function updateCardAppearance() {
           const card = document.querySelector(".card-container");
-          // Apply Theme
+          // Apply Theme Colors
           if (selectedTheme === "default") {
             document.documentElement.style.setProperty("--secondary-color", "#009688");
             document.documentElement.style.setProperty("--accent-color", "#FF5722");
@@ -747,7 +795,7 @@
             document.documentElement.style.setProperty("--neutral-dark", "#333333");
             document.documentElement.style.setProperty("--business-info-bg", "#e0f7fa");
           }
-          // Apply Icon Style changes
+          // Apply Icon Style Changes
           if (selectedIconStyle === "styleA") {
             document.querySelectorAll(".icon").forEach((el) => {
               el.style.borderRadius = "10px";
@@ -778,23 +826,28 @@
             });
           }
         }
-        function updateThemeAndIconStyle() {
-          applyTheme();
-        }
-        document.getElementById("previewThemeBtn").addEventListener("click", function () {
-          updateThemeAndIconStyle();
+        /* -------------------- Group Preview & Apply Handlers -------------------- */
+        // For each preview button, simply update the card appearance (using current selections)
+        document.querySelectorAll(".preview-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            updateCardAppearance();
+          });
         });
-        document.getElementById("applyStyleButton").addEventListener("click", function () {
-          updateThemeAndIconStyle();
-          const newUrl = new URL(window.location.href);
-          newUrl.searchParams.set("theme", selectedTheme);
-          newUrl.searchParams.set("mood", selectedMood);
-          newUrl.searchParams.set("iconstyle", selectedIconStyle);
-          history.replaceState(null, "", newUrl.toString());
-          styleDropdown.style.display = "none";
+        // For each apply button, update the card appearance and save all settings in URL
+        document.querySelectorAll(".apply-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            updateCardAppearance();
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.set("theme", selectedTheme);
+            newUrl.searchParams.set("mood", selectedMood);
+            newUrl.searchParams.set("iconstyle", selectedIconStyle);
+            history.replaceState(null, "", newUrl.toString());
+            // Optionally collapse this group after applying
+            btn.closest(".setting-content").style.display = "none";
+          });
         });
 
-        // --- Live Chat Modal Logic ---
+        /* -------------------- Live Chat Modal -------------------- */
         const chatModal = document.getElementById("chatModal");
         const floatingChatBtn = document.getElementById("floatingChatBtn");
         const sendChat = document.getElementById("sendChat");
