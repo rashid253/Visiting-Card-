@@ -1,19 +1,9 @@
+I am already using this:
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
-    <!-- PWA Meta Tags - ADD THESE LINES -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icon-192.png">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <meta name="theme-color" content="#1e90ff">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="BizCard">
-    
     <title>Business Card</title>
     <!-- Font Awesome for icons -->
     <link
@@ -330,28 +320,6 @@
         transform: translateY(-2px);
         box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
       }
-      
-      /* PWA Install Button - ADD THIS CSS */
-      .pwa-install-btn {
-        position: fixed;
-        bottom: 90px;
-        right: 20px;
-        background: #25d366;
-        color: white;
-        border: none;
-        border-radius: 50px;
-        padding: 12px 24px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        display: none;
-        z-index: 1000;
-        font-weight: bold;
-      }
-      .pwa-install-btn i {
-        margin-right: 8px;
-      }
-      
       /* Floating Feedback Button (fixed) */
       .floating-btn {
         position: fixed;
@@ -615,12 +583,6 @@
         <i class="fas fa-comments"></i>
       </button>
     </div>
-    
-    <!-- PWA Install Button - ADD THIS HTML -->
-    <button id="pwaInstallBtn" class="pwa-install-btn">
-      <i class="fas fa-download"></i> Install App
-    </button>
-    
     <!-- Floating Feedback Button (fixed) -->
     <button class="floating-btn feedback" title="Feedback" onclick="window.location.href='mailto:rashidncit@gmail.com?subject=Feedback on Business Card'">
       <i class="fas fa-comment-dots"></i>
@@ -639,47 +601,6 @@
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        
-        /* ========== PWA INSTALLATION CODE - ADD THIS SECTION ========== */
-        let deferredPrompt;
-        const installBtn = document.getElementById('pwaInstallBtn');
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-          e.preventDefault();
-          deferredPrompt = e;
-          installBtn.style.display = 'block';
-        });
-        
-        installBtn.addEventListener('click', async () => {
-          if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-              installBtn.style.display = 'none';
-              alert('App installed successfully! Check your home screen.');
-            }
-            deferredPrompt = null;
-          }
-        });
-        
-        window.addEventListener('appinstalled', () => {
-          installBtn.style.display = 'none';
-        });
-        
-        // Check if already installed
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-          installBtn.style.display = 'none';
-        }
-        
-        // Register Service Worker
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('sw.js')
-            .then(() => console.log('Service Worker Registered'))
-            .catch(err => console.log('Service Worker Error:', err));
-        }
-        
-        /* ========== EXISTING CODE CONTINUES ========== */
-        
         // Variables for settings
         let selectedTheme = "default";
         let selectedMood = "day";
